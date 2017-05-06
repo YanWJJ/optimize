@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>图片的按需加载</title>
+		<style type="text/css">
+		 
+		*{margin:0px;padding:0px;list-style:none;}
+		 
+		ul{
+		 
+		height:auto;
+		 
+		overflow:hidden;
+		 
+		width:400px;
+		 
+		margin:0 auto;
+		 
+		}
+		 
+		li{
+		 
+		width:300px;
+		 
+		height:200px;
+		 
+		border:solid 1px #ddd;
+		 
+		overflow:hidden;
+		 
+		}
+		 
+		</style>
+
+	</head>
+	<body>
+		<div>
+			<ul>
+				<li><img src="https://img1.doubanio.com/view/movie_poster_cover/lpst/public/p2455927078.webp" alt=""></li>
+				<li><img src="https://img1.doubanio.com/view/movie_poster_cover/lpst/public/p2456570038.webp" alt=""></li>
+				<li><img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2456564275.webp" alt=""></li>
+				<li><img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2456564071.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2456180253.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2456056900.webp" alt=""></li>
+				<li><img data-src="https://img1.doubanio.com/view/movie_poster_cover/lpst/public/p2455927078.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2455810613.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2455807900.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2455261804.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2455156816.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2455050536.webp" alt=""></li>
+				<li><img data-src="https://img1.doubanio.com/view/movie_poster_cover/lpst/public/p2454868217.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2454282762.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2453176400.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2452142083.webp" alt=""></li>
+				<li><img data-src="https://img1.doubanio.com/view/movie_poster_cover/lpst/public/p2450440807.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2444256500.webp" alt=""></li>
+				<li><img data-src="https://img1.doubanio.com/view/movie_poster_cover/lpst/public/p2443742358.webp" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2443574154.jpg" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2437307414.jpg" alt=""></li>
+				<li><img data-src="https://img1.doubanio.com/view/movie_poster_cover/lpst/public/p2430520709.jpg" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2429713841.jpg" alt=""></li>
+				<li><img data-src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2425658570.jpg" alt=""></li>
+				<li url="./rexiao.php"></li>
+
+			</ul>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="jquery.js"></script>
+ 
+<script type="text/javascript">
+ 
+//绑定窗口的滚动事件
+	// var windHeight = $(window).height();
+	// var srcollHeight = $(window).srcollTop();
+	// var imgHeight = $('img').offset.top;
+	// alert("asdf");
+
+	// $(function(){
+	// 	var $wd = $(window), 
+	// 		$img = $('img'),
+	// 		imgTop,
+	// 		scTop,
+	// 		wH;
+	// 		wH = $wd.height();
+	// 	$wd.scroll(function(){
+	// 		scTop = $wd.scrollTop();
+	// 		$img.each(function(){
+	// 			imgTop = $(this).offset.top;
+	// 			if(imgTop - wH < scTop && imgTop - wH > 0 && $(this).attr('src') != $(this).data('src')){
+	// 				$(this).attr({
+	// 					src: $(this).data('src')
+	// 				});
+	// 			}
+	// 		});
+	// 	});
+	// });
+
+	$(function(){
+    var $wd = $(window),
+        $img = $('img'),
+        imgTop,          //图片距离顶部高度
+        scTop,             //滚动条高度
+        wH;           //窗口高度
+    wH = $wd.height();         //获得可视浏览器的高度
+    $wd.scroll( function() {
+        scTop = $wd.scrollTop();       //获取滚动条到顶部的垂直高度
+        $img.each(function(){
+            imgTop =  $(this).offset().top;
+            // if(imgTop < wH){ 
+            // 	$(this).attr({src : $(this).data('src')}); 
+            // } else {}
+            if(imgTop - wH < scTop &&     //图片必须出现在窗口底部上面 ，因为刚开始滚动条是在最顶部，而视图已经是整个窗口，所以 imgTop < (wH + scTI) 
+                imgTop - wH > 0 &&        //排除首页图片
+                $(this).attr('src') != $(this).data('src')){          //排除已经加载过的图片
+                   $(this).attr({
+                       src: $(this).data('src')
+                   });
+            }
+        });
+    });
+});
+</script>
