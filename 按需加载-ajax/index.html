@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>ajax实现瀑布流加载图片</title>
+		<style>
+			.li{
+				height: 100px;
+				width: 100px;	
+			}
+			.imgs{
+				width: 200px;
+				height: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="ku">
+			<button class="btn">dianji</button>
+			<ul class="u"></ul>
+		</div>
+	</body>
+</html>
+<script src="jquery.js"></script>
+<script>
+	var mes = document.querySelector('.u');
+	var page_id = 0;
+	function loadimg(){
+		$.post("p03.php", {
+			page: page_id
+		}, 
+		function(data){
+			console.log(data);
+			for(var i in data){
+				    var texHtml = '<li class="li"><img src="'+ data[i] +'" alt="" class="imgs"/></li>' ;
+                    // $(".u").html(texHtml);
+                    mes.innerHTML += texHtml;					
+			}
+		}, 'json');		
+		page_id = page_id+1;
+	}
+	$(function(){
+		loadimg();
+	});
+	$(function(){
+		var $wd = $(window);
+ 		$wd.scroll( function(){
+ 			if($(document).height() - $(this).scrollTop() - $(this).height()<100){
+ 				loadimg();
+ 			}
+ 		} )
+	});
+</script>
